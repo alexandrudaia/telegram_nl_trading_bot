@@ -4,8 +4,8 @@ from datetime import datetime
 import time
 
 # Initialize Binance client with your credentials
-client = Client('jQmroUzeIQFqjXraJE1MfnNAMvJZaXTmwd2dEyihu7Fh0nZr82Yxr54d3FESBCgX', 
-               'ZGO5xOhXF4DnWI8LpoFPbIYlYA7pxwGDYs8rwQP1jZxqwM3ooGGDYlfb')
+client = Client('api_key', 
+               'api_secret')
 
 def get_btc_closing_price(timestamp):
     """
