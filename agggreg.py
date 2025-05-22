@@ -40,7 +40,7 @@ class TelegramScraper:
             logger.error(f"Connection error: {str(e)}")
             return False
 
-    async def fetch_messages(self, hours: int = 7000):  # Updated to fetch messages for 1000 hours
+    async def fetch_messages(self, hours: int = 10000):  # Updated to fetch messages for 1000 hours
         """Fetch messages from the specified channels"""
         end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(hours=hours)
@@ -71,7 +71,7 @@ class TelegramScraper:
         
         # Generate all hour keys for the last 1000 hours
         end_time = datetime.now(timezone.utc)
-        start_time = end_time - timedelta(hours=7000)
+        start_time = end_time - timedelta(hours=10000)
         current_time = start_time.replace(minute=0, second=0, microsecond=0)
         
         while current_time <= end_time:
@@ -129,68 +129,102 @@ class TelegramScraper:
 async def main():
     # List of Telegram channels to scrape
     channels = [
-        'https://t.me/binance_announcements',
-        'https://t.me/cryptocom',
-        'https://t.me/bitfinex',
-        'https://t.me/uniswap',
-        'https://t.me/sushiswap',
-        'https://t.me/1inch',
-        'https://t.me/CryptoBanter',
-        'https://t.me/CryptoBusy',
-        'https://t.me/CryptoLark',
-        'https://t.me/CryptoWendyO',
-        'https://t.me/CryptoJack',
-        'https://t.me/CryptoMickey',
-        'https://t.me/CryptoGems',
-        'https://t.me/WhaleAlert',
-        'https://t.me/Cointelegraph',
-        'https://t.me/DecryptMedia',
-        'https://t.me/BitcoinMagazine',
-        'https://t.me/CoinDesk',
-        'https://t.me/AltcoinBuzz',
-        'https://t.me/ICOdrops',
-        'https://t.me/ICOAlert',
-        'https://t.me/TokenMetrics',
-        'https://t.me/BitBoyCrypto',
-        'https://t.me/InvestAnswers',
-        'https://t.me/RealVision',
-        'https://t.me/AltcoinDaily',
-        'https://t.me/cryptoslate',
-        'https://t.me/cryptopanic',
-        'https://t.me/cryptosignals',
-        'https://t.me/cryptoinvestor',
-        'https://t.me/cryptomoonshots',
-        'https://t.me/cryptomarket',
-        'https://t.me/cryptotrading',
-        'https://t.me/cryptoinvest',
-        'https://t.me/cryptobasics',
-        'https://t.me/cryptosuccess',
-        'https://t.me/cryptoinvestorclub',
-        'https://t.me/cryptoinvestment',
-        'https://t.me/cryptoinvestmentgroup',
-        'https://t.me/cryptoinvestmentstrategy',
-        'https://t.me/cryptoinvestmenttips',
-        'https://t.me/cryptoinvestmentadvice',
-        'https://t.me/cryptoinvestmentnews',
-        'https://t.me/cryptoinvestmentanalysis',
-        'https://t.me/cryptoinvestmentopportunities',
-        'https://t.me/cryptoinvestmentportfolio',
-        'https://t.me/cryptoinvestmentfund',
-        'https://t.me/cryptoinvestmentgroupchat',
-        'https://t.me/cryptoinvestmentcommunity',
-        'https://t.me/cryptoinvestmentnetwork'
-    ]
+    # Major Cryptocurrency Exchanges (Official)
+    "binance_announcements",    # Binance Official
+    "binance_trading",         # Binance Trading
+    "binance_futures",         # Binance Futures
+    "cryptocom_official",      # Crypto.com Official
+    "kucoin_exchange",        # KuCoin Exchange
+    "kraken_exchange",        # Kraken Exchange
+    "ftx_official",           # FTX Official
+    "huobi_global",           # Huobi Global
+    "okx_english",            # OKX Exchange
+    "gate_io",               # Gate.io Exchange
+    
+    # Major News Outlets
+    "Cointelegraph",          # Cointelegraph
+    "CoinDesk",              # CoinDesk
+    "BitcoinMagazine",       # Bitcoin Magazine
+    "DecryptMedia",          # Decrypt
+    "TheBlock",              # The Block
+    "cryptoslate",           # CryptoSlate
+    "BeInCrypto",            # BeInCrypto
+    "CryptoNews",            # CryptoNews
+    "coinrivet",             # CoinRivet
+    "ambcrypto",             # AMBCrypto
+    
+    # Market Analysis & Data
+    "WhaleAlert",            # Whale Alert
+    "glassnode",            # Glassnode Alerts
+    "santimentfeed",        # Santiment
+    "cryptoquant",          # CryptoQuant
+    "messaricrypto",        # Messari
+    "IntoTheBlock",         # IntoTheBlock
+    "CoinGeckoOfficial",    # CoinGecko
+    "CMCAlerts",            # CoinMarketCap Alerts
+    "DeFiLlama",            # DeFi Llama
+    "TokenTerminal",        # Token Terminal
+    
+    # Major DeFi Protocols
+    "uniswap",              # Uniswap
+    "AaveAave",             # Aave
+    "CurveFinance",         # Curve Finance
+    "SushiSwap_org",        # SushiSwap
+    "PancakeSwap",          # PancakeSwap
+    "Compound",             # Compound
+    "MakerDAO",             # MakerDAO
+    "chainlink",            # Chainlink
+    "1inch",                # 1inch Exchange
+    "yearnfinance",         # Yearn Finance
+    
+    # Top Crypto Influencers
+    "CryptoBanter",         # Crypto Banter
+    "MMCrypto",             # MMCrypto
+    "CryptoCapital",        # Crypto Capital Venture
+    "TheMoonCarl",          # The Moon
+    "cryptomichael",        # Crypto Michael
+    "CryptoWendyO",         # Wendy O
+    "scottmelker",          # The Wolf Of All Streets
+    "RaoulGMI",             # Raoul Pal
+    "SheldonEvans",         # Sheldon Evans
+    "BitBoy_Crypto",        # BitBoy Crypto
+
+    # Research & Analysis
+    "InvestAnswers",        # Invest Answers
+    "RealVision",           # Real Vision
+    "TokenMetrics",         # Token Metrics
+    "MessariCrypto",        # Messari Crypto
+    "DappRadar",            # DappRadar
+    "nansen_ai",            # Nansen AI
+    "defiant_main",         # The Defiant
+    "tokenterminal",        # Token Terminal
+    "DefiPrime",            # DeFi Prime
+    "DefiPulse",            # DeFi Pulse
+
+    # Trading Signals & Analysis
+    "CryptoSignals",        # Crypto Signals
+    "CryptoTradingRoom",    # Crypto Trading Room
+    "AltSignals",           # Alt Signals
+    "CryptoVIPSignal",      # Crypto VIP Signal
+    "BinanceFuturesSignals", # Binance Futures Signals
+    "CryptoTrading_Signals", # Crypto Trading Signals
+    "CryptoAlerts",         # Crypto Alerts
+    "TradingCrypto",        # Trading Crypto
+    "CryptoTraders",        # Crypto Traders
+    "TradingView_Signals"   # TradingView Signals
+]
+
 
     scraper = TelegramScraper(
-        api_id="23",
-        api_hash="000",
-        phone="+",
+        api_id="23474992",
+        api_hash="0a57913f25b85329e9205fc3ed41967a",
+        phone="+40768609734",
         channels=channels
     )
 
     if await scraper.connect():
         # Fetch historical data for 1000 hours
-        await scraper.fetch_messages(hours=7000)
+        await scraper.fetch_messages(hours=10000)
         scraper.save_to_csv('historical_telegram_data.csv')
         
         logger.info("Sleeping for 1 hour before starting real-time scraping...")
