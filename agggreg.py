@@ -216,9 +216,9 @@ async def main():
 
 
     scraper = TelegramScraper(
-        api_id="23474992",
+        api_id="2347499",
         api_hash="0a57913f25b85329e9205fc3ed41967a",
-        phone="+40768609734",
+        phone="+",
         channels=channels
     )
 
